@@ -4,7 +4,7 @@ package fr.wildcodeschool.punkapi;
 
 public class Temp {
 
-    public Integer value;
+    public Double value;
     public String unit;
 
 }
