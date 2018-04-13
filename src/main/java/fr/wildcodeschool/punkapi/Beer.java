@@ -5,37 +5,108 @@ import java.util.List;
 
 public class Beer {
 
-    public Integer id;
-    public String name;
-    public String tagline;
-    public String firstBrewed;
-    public String description;
-    public String imageUrl;
-    public Double abv;
-    public Double ibu;
-    public Double targetFg;
-    public Double targetOg;
-    public Double ebc;
-    public Double srm;
-    public Double ph;
-    public Double attenuationLevel;
-    public Volume volume;
-    public BoilVolume boilVolume;
-    public Method method;
-    public Ingredients ingredients;
-    public List<String> foodPairing = null;
-    public String brewersTips;
-    public String contributedBy;
+    private Integer id;
+    private String name;
+    private String tagline;
+    private String firstBrewed;
+    private String description;
+    private String imageUrl;
+    private Double abv;
+    private Double ibu;
+    private Double targetFg;
+    private Double targetOg;
+    private Double ebc;
+    private Double srm;
+    private Double ph;
+    private Double attenuationLevel;
+    private Volume volume;
+    private BoilVolume boilVolume;
+    private Method method;
+    private List<String> foodPairing = null;
+    private String brewersTips;
+    private String contributedBy;
+    private List<Ingredient> Ingredients;
 
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public Integer getId() { return id; }
 
-    // récupère une bière en fonction de son id
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
 
-    // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
+    public void setFirstBrewed(String firstBrewed) {
+        this.firstBrewed = firstBrewed;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    // récupérer la liste des bières en fonction d'un pattern de recherche dans le nom
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
+    public void setAbv(Double abv) {
+        this.abv = abv;
+    }
+
+    public void setIbu(Double ibu) {
+        this.ibu = ibu;
+    }
+
+    public void setTargetFg(Double targetFg) {
+        this.targetFg = targetFg;
+    }
+
+    public void setTargetOg(Double targetOg) {
+        this.targetOg = targetOg;
+    }
+
+    public void setEbc(Double ebc) {
+        this.ebc = ebc;
+    }
+
+    public void setSrm(Double srm) {
+        this.srm = srm;
+    }
+
+    public void setPh(Double ph) {
+        this.ph = ph;
+    }
+
+    public void setAttenuationLevel(Double attenuationLevel) {
+        this.attenuationLevel = attenuationLevel;
+    }
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
+    }
+
+    public void setBoilVolume(BoilVolume boilVolume) {
+        this.boilVolume = boilVolume;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
+    public void setFoodPairing(List<String> foodPairing) {
+        this.foodPairing = foodPairing;
+    }
+
+    public void setBrewersTips(String brewersTips) {
+        this.brewersTips = brewersTips;
+    }
+
+    public void setContributedBy(String contributedBy) {
+        this.contributedBy = contributedBy;
+    }
 }
