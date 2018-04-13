@@ -27,4 +27,15 @@ public class Beer {
     public String brewersTips;
     public String contributedBy;
 
+
+
+
+    // récupère une bière en fonction de son id
+
+
+    // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
+
+
+    // récupérer la liste des bières en fonction d'un pattern de recherche dans le nom
+
 }

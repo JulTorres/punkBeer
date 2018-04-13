@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 
 /**
  * PunkBeer
@@ -19,7 +20,18 @@ public class App
     public static void main(String[] args) {
 
 
-        try(InputStream is = new URL("https://api.punkapi.com/v2/beers/1").openStream();
+        String complementUrl = "";
+
+        ConnectionProvider cp = ConnectionProvider.connect("beers?page=2&per_page=80 ");
+
+        List<Beer> allBeers;
+
+        BeerProvider.getAllBeers(cp);
+
+
+/*        try(
+            InputStream is = new URL("https://api.punkapi.com/v2/beers/1").openStream();
+
             JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))){
 
             //TODO: Let's start doing Yoga with Json
@@ -29,7 +41,7 @@ public class App
         }
         catch(IOException e){
             e.printStackTrace();
-        }
+        }*/
 
     }
 }
