@@ -62,6 +62,10 @@ public class Beer {
         this.imageUrl = imageUrl;
     }
 
+    public Double getAbv() {
+        return abv;
+    }
+
     public void setAbv(Double abv) {
         this.abv = abv;
     }
