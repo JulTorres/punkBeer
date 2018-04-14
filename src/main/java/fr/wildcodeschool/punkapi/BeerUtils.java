@@ -16,25 +16,37 @@ public class BeerUtils {
 
 
     // récupère la liste de toutes les bières
-    public static List<Beer> getAllBeers() {
+    public static void getAllBeers() {
         List<Beer> beers = new ArrayList<>();
 
-        String url = baseUrl + "beers?page=1&per_page=80";
+        String url = baseUrl + "beers?page=" + "1" + "&per_page=80";
 
-        try (   InputStream is = new URL(url).openStream();
-                JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
-        ) {
-            //TODO: Let's start doing Yoga with Json
-            JsonArray received = reader.readArray();
-            System.out.println(received);
+        JsonArray received;
 
-            beers = BeerFactory.buildBeerList(received);
+        int counter = 0;
+        int index = 0;
+        do {
+            try (   InputStream is = new URL(baseUrl + "beers?page=" + ++index + "&per_page=80").openStream();
+                    JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
+            ) {
+                //TODO: Let's start doing Yoga with Json
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                counter = 0;
+                received = reader.readArray();
 
-        return beers;
+                System.out.println(received.size());
+                counter = received.size();
+                //System.out.println(received); //TODO virer cette ligne !!
+                BeerFactory.buildBeerList(received);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (counter == 80);
+
+
+
+        return;
     }
 
     // récupère une bière par son id.

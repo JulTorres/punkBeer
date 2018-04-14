@@ -1,9 +1,7 @@
 package fr.wildcodeschool.punkapi;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static fr.wildcodeschool.punkapi.BeerUtils.*;
+import static fr.wildcodeschool.punkapi.BeerFactory.beers;
+import static fr.wildcodeschool.punkapi.BeerUtils.getAllBeers;
 
 /**
  * PunkBeer
@@ -15,13 +13,8 @@ public class App
 {
     public static void main(String[] args) {
 
-        List<Beer> allBeers = getAllBeers();
-        System.out.println(allBeers.get(3).getName());
-
-
-
-/*        Beer myBeer = BeerUtils.getBeerBy(1);
-        System.out.println(myBeer.getName());*/
+        getAllBeers();
+        System.out.println(beers.get(186).getName());
 
     }
 }

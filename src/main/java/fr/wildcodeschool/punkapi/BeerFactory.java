@@ -7,9 +7,10 @@ import java.util.List;
 
 public class BeerFactory {
 
+    public static List<Beer> beers = new ArrayList<Beer>();
 
     public static Beer buildBeer(JsonObject receivedObject) {
-        
+
         Beer beer = new Beer();
 /*
         List<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -82,8 +83,12 @@ factoriser les chemins
         for (int i = 0 ; i < mashTempObjects.size() ; i++) {
             JsonObject mashTempObject = mashTempObjects.getJsonObject(i);
             JsonObject mashTempTempObject = mashTempObject.getJsonObject("temp");
-            mashTempTemp.setValue(mashTempTempObject.getJsonNumber("value").doubleValue());
-            mashTempTemp.setUnit(mashTempTempObject.getString("unit"));
+
+            double mashTempTempValueObject = mashTempTempObject.isNull("value") ? 0 : mashTempTempObject.getJsonNumber("value").doubleValue();
+            mashTempTemp.setValue(mashTempTempValueObject);
+
+            String mashTempTempUnitObject = mashTempTempObject.isNull("unit") ? "" : mashTempTempObject.getString("unit");
+            mashTempTemp.setUnit(mashTempTempUnitObject);
 
             int duration = mashTempObject.isNull("duration") ? 0 : mashTempObject.getInt("duration");
 
@@ -139,13 +144,12 @@ factoriser les chemins
 
     }
 
-    public static List<Beer> buildBeerList(JsonArray received) {
-        List<Beer> beers = new ArrayList<Beer>();
+    public static void buildBeerList(JsonArray received) {
 
         for (int i = 0 ; i < received.size() ; i++) {
             beers.add(BeerFactory.buildBeer(received.getJsonObject(i)));
         }
 
-        return beers;
+        return;
     }
 }
