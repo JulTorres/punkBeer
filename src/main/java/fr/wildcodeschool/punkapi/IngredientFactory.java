@@ -34,11 +34,9 @@ public class IngredientFactory {
                 Ingredient ingredient = new Ingredient();
 
                 ingredient.setIngredientType("malt");
-                ingredient.setName(hops.getJsonObject(i).getString("name"));
-                ingredient.setAmountUnit(hops.getJsonObject(i).getJsonObject("amount").getString("unit"));
-                ingredient.setAmountValue(hops.getJsonObject(i).getJsonObject("amount").getJsonNumber("value").doubleValue());
-                ingredient.setAdd(hops.getJsonObject(i).getString("add"));
-                ingredient.setAttribute(hops.getJsonObject(i).getString("attribute"));
+                ingredient.setName(malts.getJsonObject(i).getString("name"));
+                ingredient.setAmountUnit(malts.getJsonObject(i).getJsonObject("amount").getString("unit"));
+                ingredient.setAmountValue(malts.getJsonObject(i).getJsonObject("amount").getJsonNumber("value").doubleValue());
 
                 ingredients.add(ingredient);
             }

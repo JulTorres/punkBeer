@@ -20,19 +20,41 @@ Refactoring, protect against null !!
 factoriser les chemins
  */
 
+        int id = receivedObject.isNull("id") ? 0 : receivedObject.getInt("id");
+        beer.setId(id);
 
-        beer.setId(receivedObject.getInt("id"));
-        beer.setName(receivedObject.getString("name"));
-        beer.setDescription(receivedObject.getString("description"));
-        beer.setImageUrl(receivedObject.getString("image_url"));
-        beer.setAbv(receivedObject.getJsonNumber("abv").doubleValue());
-        beer.setIbu(receivedObject.getJsonNumber("ibu").doubleValue());
-        beer.setTargetFg(receivedObject.getJsonNumber("target_fg").doubleValue());
-        beer.setTargetOg(receivedObject.getJsonNumber("target_og").doubleValue());
-        beer.setEbc(receivedObject.getJsonNumber("ebc").doubleValue());
-        beer.setSrm(receivedObject.getJsonNumber("srm").doubleValue());
-        beer.setPh(receivedObject.getJsonNumber("ph").doubleValue());
-        beer.setAttenuationLevel(receivedObject.getJsonNumber("attenuation_level").doubleValue());
+        String name = receivedObject.isNull("name") ? "" : receivedObject.getString("name");
+        beer.setName(name);
+
+        String description = receivedObject.isNull("description") ? "" : receivedObject.getString("description");
+        beer.setDescription(description);
+
+        String imageUrl = receivedObject.isNull("image_url") ? "" : receivedObject.getString("image_url");
+        beer.setImageUrl(imageUrl);
+
+        double abv = receivedObject.isNull("abv") ? 0 : receivedObject.getJsonNumber("abv").doubleValue();
+        beer.setAbv(abv);
+
+        double ibu = receivedObject.isNull("ibu") ? 0 : receivedObject.getJsonNumber("ibu").doubleValue();
+        beer.setIbu(ibu);
+
+        double targetFg = receivedObject.isNull("target_fg") ? 0 : receivedObject.getJsonNumber("target_fg").doubleValue();
+        beer.setTargetFg(targetFg);
+
+        double targetOg = receivedObject.isNull("target_og") ? 0 : receivedObject.getJsonNumber("target_og").doubleValue();
+        beer.setTargetOg(targetOg);
+
+        double ebc = receivedObject.isNull("ebc") ? 0 : receivedObject.getJsonNumber("ebc").doubleValue();
+        beer.setEbc(ebc);
+
+        double srm = receivedObject.isNull("srm") ? 0 : receivedObject.getJsonNumber("srm").doubleValue();
+        beer.setSrm(srm);
+
+        double ph = receivedObject.isNull("ph") ? 0 : receivedObject.getJsonNumber("ph").doubleValue();
+        beer.setPh(ph);
+
+        double attenuationLevel = receivedObject.isNull("attenuation_level") ? 0 : receivedObject.getJsonNumber("attenuation_level").doubleValue();
+        beer.setAttenuationLevel(attenuationLevel);
 
 
         JsonObject volumeObject = receivedObject.getJsonObject("volume");
@@ -77,8 +99,11 @@ factoriser les chemins
         JsonObject fermentationTempObject = methodObject.getJsonObject("fermentation").getJsonObject("temp");
         Temp fermentationTemp = new Temp();
 
-        fermentationTemp.setValue(fermentationTempObject.getJsonNumber("value").doubleValue());
-        fermentationTemp.setUnit(fermentationTempObject.getString("unit"));
+        double fermentationTempValue = fermentationTempObject.isNull("value") ? 0 : fermentationTempObject.getJsonNumber("value").doubleValue();
+        fermentationTemp.setValue(fermentationTempValue);
+
+        String fermentationTempUnit = fermentationTempObject.isNull("unit") ? "" : fermentationTempObject.getString("unit");
+        fermentationTemp.setUnit(fermentationTempUnit);
 
         Fermentation fermentation = new Fermentation(fermentationTemp);
 
@@ -89,12 +114,12 @@ factoriser les chemins
 
 
 
-        // INGREDIENTS
+        // INGREDIENTS                                              
         JsonObject receivedIngredients = receivedObject.getJsonObject("ingredients");
         beer.ingredients = IngredientFactory.buildIngredient(receivedIngredients);
 
-
-        beer.setYeast(receivedIngredients.getString("yeast"));
+        String yeast = receivedIngredients.isNull("yeast") ? "" : receivedIngredients.getString("yeast");
+        beer.setYeast(yeast);
 
         JsonArray foodPairing = receivedObject.getJsonArray("food_pairing");
         if (foodPairing != null) {
@@ -103,10 +128,11 @@ factoriser les chemins
             }
         }
 
-        beer.setBrewersTips(receivedObject.getString("brewers_tips"));
+        String brewersTips = receivedObject.isNull("brewers_tips") ? "" : receivedObject.getString("brewers_tips");
+        beer.setBrewersTips(brewersTips);
 
-        beer.setContributedBy(receivedObject.getString("contributed_by"));
-
+        String contributedBy = receivedObject.isNull("contributed_by") ? "" : receivedObject.getString("contributed_by");
+        beer.setContributedBy(contributedBy);
 
 
         return beer;
@@ -117,17 +143,9 @@ factoriser les chemins
         List<Beer> beers = new ArrayList<Beer>();
 
         for (int i = 0 ; i < received.size() ; i++) {
-            beers.add(BeerFactory.buildBeer(received.getJsonObject(1)));
+            beers.add(BeerFactory.buildBeer(received.getJsonObject(i)));
         }
 
         return beers;
     }
 }
-
-/*
-
-            //private List<String> foodPairing = null;
-            private String brewersTips;
-            private String contributedBy;
-
-*/

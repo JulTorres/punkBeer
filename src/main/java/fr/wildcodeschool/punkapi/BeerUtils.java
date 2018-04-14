@@ -17,18 +17,13 @@ public class BeerUtils {
 
     // récupère la liste de toutes les bières
     public static List<Beer> getAllBeers() {
-        List<Beer> beers = new ArrayList<Beer>();
+        List<Beer> beers = new ArrayList<>();
 
-        StringBuilder stringBuilder = new StringBuilder(baseUrl);
-        stringBuilder.append("beers");
-        stringBuilder.append("?page=1&per_page=80");
-        String url = stringBuilder.toString();
+        String url = baseUrl + "beers?page=1&per_page=80";
 
-        try (
-                InputStream is = new URL(url).openStream();
+        try (   InputStream is = new URL(url).openStream();
                 JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
         ) {
-
             //TODO: Let's start doing Yoga with Json
             JsonArray received = reader.readArray();
             System.out.println(received);
@@ -45,16 +40,11 @@ public class BeerUtils {
     // récupère une bière par son id.
     public static Beer getBeerBy(int id) {
         Beer beer = new Beer();
-        StringBuilder stringBuilder = new StringBuilder(baseUrl);
-        stringBuilder.append("beers/");
-        stringBuilder.append(id);
-        String url = stringBuilder.toString();
+        String url = baseUrl + "beers/" + id;
 
-        try (
-            InputStream is = new URL(url).openStream();
-            JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
+        try (   InputStream is = new URL(url).openStream();
+                JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
             ) {
-
             //TODO: Let's start doing Yoga with Json
             JsonArray received = reader.readArray();
             System.out.println(received);
@@ -71,7 +61,6 @@ public class BeerUtils {
 
 
 
-// récupère une bière en fonction de son id
 
 
 // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
