@@ -7,8 +7,8 @@ public class Beer {
 
     private Integer id;
     private String name;
-    private String tagline;
-    private String firstBrewed;
+/*    private String tagline;
+    private String firstBrewed;*/
     private String description;
     private String imageUrl;
     private Double abv;
@@ -25,7 +25,9 @@ public class Beer {
     private List<String> foodPairing = null;
     private String brewersTips;
     private String contributedBy;
-    private List<Ingredient> Ingredients;
+    private String yeast;
+
+    public List<Ingredient> ingredients;
 
 
     public void setId(Integer id) {
@@ -38,13 +40,13 @@ public class Beer {
         this.name = name;
     }
 
-    public void setTagline(String tagline) {
+/*    public void setTagline(String tagline) {
         this.tagline = tagline;
     }
 
     public void setFirstBrewed(String firstBrewed) {
         this.firstBrewed = firstBrewed;
-    }
+    }*/
 
     public void setDescription(String description) {
         this.description = description;
@@ -97,6 +99,8 @@ public class Beer {
     public void setMethod(Method method) {
         this.method = method;
     }
+
+    public void setYeast(String yeast) { this.yeast = yeast; }
 
     public void setFoodPairing(List<String> foodPairing) {
         this.foodPairing = foodPairing;

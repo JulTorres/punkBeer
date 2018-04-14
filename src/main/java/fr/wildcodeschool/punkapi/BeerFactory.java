@@ -11,6 +11,10 @@ public class BeerFactory {
     public static Beer buildBeer(JsonArray received) {
         
         Beer beer = new Beer();
+/*
+        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+*/
+
         JsonObject receivedObject = received.getJsonObject(0);
 
 
@@ -64,15 +68,19 @@ public class BeerFactory {
         beer.setMethod(method);
 
 
+        JsonObject receivedIngredients = receivedObject.getJsonObject("ingredients");
+        beer.ingredients = IngredientFactory.buildIngredient(receivedIngredients);
+
+
+        return beer;
+
+    }
+}
+
 /*
 
-            private Ingredient ingredient;
             //private List<String> foodPairing = null;
             private String brewersTips;
             private String contributedBy;
 
 */
-    return beer;
-
-    }
-}
