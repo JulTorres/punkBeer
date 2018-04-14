@@ -6,7 +6,6 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,30 @@ public class BeerUtils {
 
 
     // récupère la liste de toutes les bières
-    public static void getAllBeers() {
+    public static List<Beer> getAllBeers() {
+        List<Beer> beers = new ArrayList<Beer>();
 
+        StringBuilder stringBuilder = new StringBuilder(baseUrl);
+        stringBuilder.append("beers");
+        stringBuilder.append("?page=1&per_page=80");
+        String url = stringBuilder.toString();
+
+        try (
+                InputStream is = new URL(url).openStream();
+                JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
+        ) {
+
+            //TODO: Let's start doing Yoga with Json
+            JsonArray received = reader.readArray();
+            System.out.println(received);
+
+            beers = BeerFactory.buildBeerList(received);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return beers;
     }
 
     // récupère une bière par son id.
@@ -38,7 +59,7 @@ public class BeerUtils {
             JsonArray received = reader.readArray();
             System.out.println(received);
 
-            beer = BeerFactory.buildBeer(received);
+            beer = BeerFactory.buildBeer(received.getJsonObject(0));
 
         } catch (IOException e) {
             e.printStackTrace();

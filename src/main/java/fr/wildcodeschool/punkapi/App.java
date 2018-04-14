@@ -1,5 +1,6 @@
 package fr.wildcodeschool.punkapi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,10 +13,14 @@ public class App
 {
     public static void main(String[] args) {
 
-        //List<Beer> allBeers;
+        List<Beer> allBeers = new ArrayList<Beer>();
+        allBeers = BeerUtils.getAllBeers();
+        System.out.println(allBeers.get(0).getName());
 
-        Beer myBeer = BeerUtils.getBeerBy(1);
-        System.out.println(myBeer.getName());
+
+
+/*        Beer myBeer = BeerUtils.getBeerBy(1);
+        System.out.println(myBeer.getName());*/
 
     }
 }

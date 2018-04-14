@@ -7,8 +7,12 @@ public class Temp {
     public double value;
     public String unit;
 
-    Temp(double value, String unit) {
+
+    public void setValue(double value) {
         this.value = value;
+    }
+
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 }

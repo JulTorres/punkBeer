@@ -8,14 +8,17 @@ import java.util.List;
 public class BeerFactory {
 
 
-    public static Beer buildBeer(JsonArray received) {
+    public static Beer buildBeer(JsonObject receivedObject) {
         
         Beer beer = new Beer();
 /*
         List<Ingredient> ingredients = new ArrayList<Ingredient>();
 */
 
-        JsonObject receivedObject = received.getJsonObject(0);
+/*
+Refactoring, protect against null !!
+factoriser les chemins
+ */
 
 
         beer.setId(receivedObject.getInt("id"));
@@ -31,43 +34,62 @@ public class BeerFactory {
         beer.setPh(receivedObject.getJsonNumber("ph").doubleValue());
         beer.setAttenuationLevel(receivedObject.getJsonNumber("attenuation_level").doubleValue());
 
+
         JsonObject volumeObject = receivedObject.getJsonObject("volume");
-        
         beer.setVolume(new Volume(
                 volumeObject.getInt("value"),
                 volumeObject.getString("unit")
         ));
 
+        JsonObject boilVolumeObject = receivedObject.getJsonObject("boil_volume");
         beer.setBoilVolume(new BoilVolume(
-                receivedObject.getJsonObject("boil_volume").getInt("value"),
-                volumeObject.getString("unit")
+                boilVolumeObject.getInt("value"),
+                boilVolumeObject.getString("unit")
         ));
 
-        JsonObject mashTempObject = receivedObject.getJsonObject("method").getJsonArray("mash_temp").getJsonObject(0).getJsonObject("temp");
-        Temp mashTempTemp = new Temp(
-                mashTempObject.getJsonNumber("value").doubleValue(),
-                mashTempObject.getString("unit")
-        );
-        MashTemp mashTemp = new MashTemp(
-                mashTempTemp,
-                receivedObject.getJsonObject("method").getJsonArray("mash_temp").getJsonObject(0).getInt("duration")
-        );
 
+        // METHOD
+        JsonObject methodObject = receivedObject.getJsonObject("method");
+
+        // MASH_TEMPS
         List<MashTemp> mashTemps = new ArrayList<>();
-        mashTemps.add(mashTemp);
 
-        Temp fermentationTemp = new Temp (
-                receivedObject.getJsonObject("method").getJsonObject("fermentation").getJsonObject("temp").getJsonNumber("value").doubleValue(),
-                receivedObject.getJsonObject("method").getJsonObject("fermentation").getJsonObject("temp").getString("unit")
-        );
+
+        JsonArray mashTempObjects = methodObject.getJsonArray("mash_temp");
+        Temp mashTempTemp = new Temp();
+        for (int i = 0 ; i < mashTempObjects.size() ; i++) {
+            JsonObject mashTempObject = mashTempObjects.getJsonObject(i);
+            JsonObject mashTempTempObject = mashTempObject.getJsonObject("temp");
+            mashTempTemp.setValue(mashTempTempObject.getJsonNumber("value").doubleValue());
+            mashTempTemp.setUnit(mashTempTempObject.getString("unit"));
+
+            int duration = mashTempObject.isNull("duration") ? 0 : mashTempObject.getInt("duration");
+
+            MashTemp mashTemp = new MashTemp(
+                    mashTempTemp,
+                    duration
+            );
+
+            mashTemps.add(mashTemp);
+        }
+
+
+        JsonObject fermentationTempObject = methodObject.getJsonObject("fermentation").getJsonObject("temp");
+        Temp fermentationTemp = new Temp();
+
+        fermentationTemp.setValue(fermentationTempObject.getJsonNumber("value").doubleValue());
+        fermentationTemp.setUnit(fermentationTempObject.getString("unit"));
 
         Fermentation fermentation = new Fermentation(fermentationTemp);
 
-        Method method = new Method(mashTemps, fermentation, receivedObject.getJsonObject("method").get("twist"));
+
+        Method method = new Method(mashTemps, fermentation, methodObject.get("twist"));
 
         beer.setMethod(method);
 
 
+
+        // INGREDIENTS
         JsonObject receivedIngredients = receivedObject.getJsonObject("ingredients");
         beer.ingredients = IngredientFactory.buildIngredient(receivedIngredients);
 
@@ -89,6 +111,16 @@ public class BeerFactory {
 
         return beer;
 
+    }
+
+    public static List<Beer> buildBeerList(JsonArray received) {
+        List<Beer> beers = new ArrayList<Beer>();
+
+        for (int i = 0 ; i < received.size() ; i++) {
+            beers.add(BeerFactory.buildBeer(received.getJsonObject(1)));
+        }
+
+        return beers;
     }
 }
 
