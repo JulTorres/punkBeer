@@ -1,11 +1,17 @@
 
 package fr.wildcodeschool.punkapi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Beer {
 
     private Integer id;
+
+    public String getName() {
+        return name;
+    }
+
     private String name;
 /*    private String tagline;
     private String firstBrewed;*/
@@ -22,12 +28,12 @@ public class Beer {
     private Volume volume;
     private BoilVolume boilVolume;
     private Method method;
-    private List<String> foodPairing = null;
     private String brewersTips;
     private String contributedBy;
     private String yeast;
 
     public List<Ingredient> ingredients;
+    public List<String> foodPairing = new ArrayList<String>();
 
 
     public void setId(Integer id) {
@@ -101,10 +107,6 @@ public class Beer {
     }
 
     public void setYeast(String yeast) { this.yeast = yeast; }
-
-    public void setFoodPairing(List<String> foodPairing) {
-        this.foodPairing = foodPairing;
-    }
 
     public void setBrewersTips(String brewersTips) {
         this.brewersTips = brewersTips;

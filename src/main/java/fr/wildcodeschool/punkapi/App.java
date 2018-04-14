@@ -15,7 +15,7 @@ public class App
         //List<Beer> allBeers;
 
         Beer myBeer = BeerUtils.getBeerBy(1);
-        System.out.println(myBeer.toString());
+        System.out.println(myBeer.getName());
 
     }
 }

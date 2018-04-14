@@ -72,6 +72,21 @@ public class BeerFactory {
         beer.ingredients = IngredientFactory.buildIngredient(receivedIngredients);
 
 
+        beer.setYeast(receivedIngredients.getString("yeast"));
+
+        JsonArray foodPairing = receivedObject.getJsonArray("food_pairing");
+        if (foodPairing != null) {
+            for (int i = 0 ; i < foodPairing.size() ; i++) {
+                beer.foodPairing.add(foodPairing.getString(i));
+            }
+        }
+
+        beer.setBrewersTips(receivedObject.getString("brewers_tips"));
+
+        beer.setContributedBy(receivedObject.getString("contributed_by"));
+
+
+
         return beer;
 
     }
