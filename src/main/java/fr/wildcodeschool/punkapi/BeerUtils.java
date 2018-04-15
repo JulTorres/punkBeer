@@ -31,7 +31,7 @@ public class BeerUtils {
         beers.clear();
 
         do {
-            url = baseUrl + "?page=" + index++ + "&per_page=80";
+            url = baseUrl + "?page=" + index++ + "&per_page=25";//TODO remettre 80
             fetchBeer(url);
         } while (received != null && received.size() == 80);
     }
@@ -47,7 +47,7 @@ public class BeerUtils {
 
 
     // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
-    public static void getBeerByIngredient(String ingredient, boolean moreOrLess, int quantity) {//TODO essayer double
+    public static void getBeerByIngredient(String ingredient, boolean moreOrLess, double quantity) {
         // recupère toutes les bières
         getAllBeers();
         //iterate beers

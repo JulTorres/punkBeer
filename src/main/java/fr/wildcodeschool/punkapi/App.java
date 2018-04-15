@@ -16,11 +16,11 @@ public class App
         for (int i = 1 ; i < beers.size() ; i++) {
             System.out.println(beers.get(i).getName());
         }
-
+*/
         getBeerBy(6);
         System.out.println(beers.get(0).getAbv());
 
-        *//*
+       /*
          * getting a list of beers by characteristics
          *//*
         getBeerBy("abv", true, 16);
@@ -34,11 +34,11 @@ public class App
             System.out.println(beers.get(i).getId());
         }*/
 
-        getBeerByIngredient("Motueka", true, 5);
+/*        getBeerByIngredient("Motueka", true, 5);
         for (int i = 1; i < customList.size(); i++) {
             System.out.println(customList.get(i).getName());
             System.out.println(customList.get(i).getId());
-        }
+        }*/
 
     }
 }

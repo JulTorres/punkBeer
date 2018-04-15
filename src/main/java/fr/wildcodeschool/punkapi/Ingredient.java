@@ -1,7 +1,5 @@
-
 package fr.wildcodeschool.punkapi;
 
-import java.util.List;
 
 public class Ingredient {
 
