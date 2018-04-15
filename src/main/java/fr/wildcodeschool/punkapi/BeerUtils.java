@@ -12,11 +12,18 @@ import java.util.List;
 
 public class BeerUtils {
 
+    // private
     private static final String baseUrl = "https://api.punkapi.com/v2/beers";
-    public static List<Beer> beers = new ArrayList<>();
     private static JsonArray received;
 
-    // récupère la liste de toutes les bières
+    // package private
+    static List<Beer> beers = new ArrayList<>();
+    static List<Beer> customList = new ArrayList<>();
+
+
+    /** récupère la liste de toutes les bières
+     *
+     */
     public static void getAllBeers() {
 
         int index = 1;
@@ -40,10 +47,31 @@ public class BeerUtils {
 
 
     // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
-    public static void getBeerBy(IngredientQuery ingredient, boolean moreOrLess, int quantity) {
+    public static void getBeerByIngredient(String ingredient, boolean moreOrLess, int quantity) {//TODO essayer double
+        // recupère toutes les bières
+        getAllBeers();
+        //iterate beers
+        for(int i = 0; i < beers.size(); i++) {
+            //check ingredients for one specific ingredient
+            List<Ingredient> ingredientList = beers.get(i).getIngredients();
+            for(int j = 0; j < ingredientList.size(); j++) {
+                if (ingredientList.get(j).getName().equals(ingredient)
+                    && (ingredientList.get(j).getAmountValue() > quantity) == moreOrLess) {
+                        // store any beer containing the right amount of that ingredient in a new list
+                        customList.add(beers.get(i));
+                }
+            }
+        }
+    }
+
+
+
+
+    // récupérer les bières selon la valeur d'une de leurs caractéristiques
+    public static void getBeerBy(String characteristic, boolean moreOrLess, int quantity) {
 
         String choiceComplement = moreOrLess ? "_gt" : "_lt";
-        String url = baseUrl + "?" + ingredient.getName() + choiceComplement + "=" + quantity;
+        String url = baseUrl + "?" + characteristic + choiceComplement + "=" + quantity;
         beers.clear();
 
         fetchBeer(url);

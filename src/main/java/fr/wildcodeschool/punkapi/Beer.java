@@ -7,14 +7,9 @@ import java.util.List;
 public class Beer {
 
     private Integer id;
-
-    public String getName() {
-        return name;
-    }
-
     private String name;
-/*    private String tagline;
-    private String firstBrewed;*/
+    private String tagline;
+    private String firstBrewed;
     private String description;
     private String imageUrl;
     private Double abv;
@@ -32,8 +27,8 @@ public class Beer {
     private String contributedBy;
     private String yeast;
 
-    public List<Ingredient> ingredients;
-    public List<String> foodPairing = new ArrayList<String>();
+    private List<Ingredient> ingredients;
+    private List<String> foodPairing = new ArrayList<String>();
 
 
     public void setId(Integer id) {
@@ -46,13 +41,17 @@ public class Beer {
         this.name = name;
     }
 
-/*    public void setTagline(String tagline) {
+    public String getName() {
+        return name;
+    }
+
+    public void setTagline(String tagline) {
         this.tagline = tagline;
     }
 
     public void setFirstBrewed(String firstBrewed) {
         this.firstBrewed = firstBrewed;
-    }*/
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -118,5 +117,13 @@ public class Beer {
 
     public void setContributedBy(String contributedBy) {
         this.contributedBy = contributedBy;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

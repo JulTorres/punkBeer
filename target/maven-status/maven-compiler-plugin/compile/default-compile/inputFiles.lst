@@ -1,9 +1,8 @@
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Fermentation.java
-/home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Hop.java
+/home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/IngredientType.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Method.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Volume.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/App.java
-/home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Malt.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/Temp.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/BeerUtils.java
 /home/julien/projects/punkBeer/src/main/java/fr/wildcodeschool/punkapi/IngredientFactory.java

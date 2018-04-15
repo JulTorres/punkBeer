@@ -5,18 +5,21 @@ import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.wildcodeschool.punkapi.IngredientType.HOPS;
+import static fr.wildcodeschool.punkapi.IngredientType.MALT;
+
 public class IngredientFactory {
 
-    static List<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    public static List<Ingredient> buildIngredient(JsonObject receivedIngredients) {
+    public static List<Ingredient> buildIngredientList(JsonObject receivedIngredients) {//TODO factoriser
 
         JsonArray hops = receivedIngredients.getJsonArray("hops");
         if( hops != null) {
             for(int i = 0 ; i < hops.size() ; i++) {
                 Ingredient ingredient = new Ingredient();
 
-                ingredient.setIngredientType("hops");
+                ingredient.setIngredientType(HOPS);
                 ingredient.setName(hops.getJsonObject(i).getString("name"));
                 ingredient.setAmountUnit(hops.getJsonObject(i).getJsonObject("amount").getString("unit"));
                 ingredient.setAmountValue(hops.getJsonObject(i).getJsonObject("amount").getJsonNumber("value").doubleValue());
@@ -33,7 +36,7 @@ public class IngredientFactory {
             for (int i = 0 ; i < malts.size() ; i++) {
                 Ingredient ingredient = new Ingredient();
 
-                ingredient.setIngredientType("malt");
+                ingredient.setIngredientType(MALT);
                 ingredient.setName(malts.getJsonObject(i).getString("name"));
                 ingredient.setAmountUnit(malts.getJsonObject(i).getJsonObject("amount").getString("unit"));
                 ingredient.setAmountValue(malts.getJsonObject(i).getJsonObject("amount").getJsonNumber("value").doubleValue());

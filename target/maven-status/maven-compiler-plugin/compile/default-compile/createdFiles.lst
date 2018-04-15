@@ -1,14 +1,13 @@
 fr/wildcodeschool/punkapi/Fermentation.class
 fr/wildcodeschool/punkapi/BeerUtils.class
 fr/wildcodeschool/punkapi/IngredientFactory.class
-fr/wildcodeschool/punkapi/Hop.class
 fr/wildcodeschool/punkapi/MashTemp.class
 fr/wildcodeschool/punkapi/App.class
 fr/wildcodeschool/punkapi/Ingredient.class
 fr/wildcodeschool/punkapi/Volume.class
-fr/wildcodeschool/punkapi/Malt.class
 fr/wildcodeschool/punkapi/Method.class
 fr/wildcodeschool/punkapi/Beer.class
 fr/wildcodeschool/punkapi/BeerFactory.class
+fr/wildcodeschool/punkapi/IngredientType.class
 fr/wildcodeschool/punkapi/BoilVolume.class
 fr/wildcodeschool/punkapi/Temp.class

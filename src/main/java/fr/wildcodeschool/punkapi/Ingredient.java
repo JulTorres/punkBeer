@@ -5,10 +5,7 @@ import java.util.List;
 
 public class Ingredient {
 
-/*    public List<Malt> malt = null;
-    public List<Hop> hops = null;*/
-
-    public String ingredientType;
+    public IngredientType ingredientType;//TODO remplacer par enum
     public String name;
     public double amountValue;
     public String amountUnit;
@@ -16,7 +13,7 @@ public class Ingredient {
     public String attribute;
 
 
-    public void setIngredientType(String ingredientType) {
+    public void setIngredientType(IngredientType ingredientType) {
         this.ingredientType = ingredientType;
     }
 
@@ -24,8 +21,16 @@ public class Ingredient {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setAmountValue(double amountValue) {
         this.amountValue = amountValue;
+    }
+
+    public double getAmountValue() {
+        return amountValue;
     }
 
     public void setAmountUnit(String amountUnit) {
