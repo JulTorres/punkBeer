@@ -5,9 +5,11 @@ import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.wildcodeschool.punkapi.BeerUtils.beers;
+
 public class BeerFactory {
 
-    public static List<Beer> beers = new ArrayList<Beer>();
+    //public static List<Beer> beers = new ArrayList<Beer>();
 
     public static Beer buildBeer(JsonObject receivedObject) {
 
@@ -18,7 +20,6 @@ public class BeerFactory {
 
 /*
 Refactoring, protect against null !!
-factoriser les chemins
  */
 
         int id = receivedObject.isNull("id") ? 0 : receivedObject.getInt("id");

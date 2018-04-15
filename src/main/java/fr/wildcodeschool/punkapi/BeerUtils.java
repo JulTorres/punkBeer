@@ -13,88 +13,64 @@ import java.util.List;
 public class BeerUtils {
 
     private static final String baseUrl = "https://api.punkapi.com/v2/beers";
-
+    public static List<Beer> beers = new ArrayList<>();
+    private static JsonArray received;
 
     // récupère la liste de toutes les bières
     public static void getAllBeers() {
 
-        JsonArray received;
-        int counter = 0;
-        int index = 0;
+        int index = 1;
+        String url;
+        beers.clear();
 
         do {
-            try (   InputStream is = new URL(baseUrl + "?page=" + ++index + "&per_page=80").openStream();
-                    JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
-            ) {
-                received = reader.readArray();
-                BeerFactory.buildBeerList(received);
-
-                counter = 0;
-                counter = received.size();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } while (counter == 80);
+            url = baseUrl + "?page=" + index++ + "&per_page=80";
+            fetchBeer(url);
+        } while (received != null && received.size() == 80);
     }
 
 
     // récupère une bière par son id.
-    public static Beer getBeerBy(int id) {
-        Beer beer = new Beer();
+    public static void getBeerBy(int id) {
         String url = baseUrl + "/" + id;
+        beers.clear();
 
-        try (   InputStream is = new URL(url).openStream();
-                JsonReader reader =  Json.createReader(new InputStreamReader(is, "UTF-8"))
-            ) {
-            //TODO: Let's start doing Yoga with Json
-            JsonArray received = reader.readArray();
-            System.out.println(received);
-
-            beer = BeerFactory.buildBeer(received.getJsonObject(0));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return beer;
+        fetchBeer(url);
     }
 
+
     // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
-    public static List<Beer> getBeerBy(IngredientQuery ingredient, boolean moreOrLess, int quantity) {
-        List<Beer> beers = new ArrayList<>();
+    public static void getBeerBy(IngredientQuery ingredient, boolean moreOrLess, int quantity) {
 
         String choiceComplement = moreOrLess ? "_gt" : "_lt";
         String url = baseUrl + "?" + ingredient.getName() + choiceComplement + "=" + quantity;
+        beers.clear();
 
-        try (   InputStream is = new URL(url).openStream();
-                JsonReader reader = Json.createReader(new InputStreamReader(is, "UTF-8"))
-        ) {
-            JsonArray received = reader.readArray();
+        fetchBeer(url);
 
-            for (int i = 1 ; i < received.size() ; i++) {
-                Beer beer = BeerFactory.buildBeer(received.getJsonObject(i));
-                beers.add(beer);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return beers;//TODO gérer le cas ou rien n'est retourné ex abv 80+
+        //TODO gérer le cas ou rien n'est retourné ex abv 80+
     }
 
+
     // récupérer la liste des bières en fonction d'un pattern de recherche dans le nom
-    public static List<Beer> getBeerBy(String name) {
-        List<Beer> beers = new ArrayList<>();
+    public static void getBeerBy(String name) {
 
         String url = baseUrl + "?beer_name=" + name;
+        beers.clear();
 
-        try (   InputStream is = new URL(url).openStream();
-                JsonReader reader = Json.createReader(new InputStreamReader(is, "UTF-8"))
+        fetchBeer(url);
+
+        //TODO gérer le cas ou rien n'est retourné ex abv 80+
+    }
+
+
+    //se connecte à l'api sur l'url fournie et retourne le json reçu
+    private static void fetchBeer(String url) {
+        try (InputStream is = new URL(url).openStream();
+             JsonReader reader = Json.createReader(new InputStreamReader(is, "UTF-8"))
         ) {
-            JsonArray received = reader.readArray();
-
-            for (int i = 1 ; i < received.size() ; i++) {
+            received = reader.readArray();
+            for (int i = 0 ; i <= received.size() - 1 ; i++) {
                 Beer beer = BeerFactory.buildBeer(received.getJsonObject(i));
                 beers.add(beer);
             }
@@ -102,9 +78,6 @@ public class BeerUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return beers;//TODO gérer le cas ou rien n'est retourné ex abv 80+
     }
 
 }
-

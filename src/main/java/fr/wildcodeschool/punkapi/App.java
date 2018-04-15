@@ -3,7 +3,7 @@ package fr.wildcodeschool.punkapi;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.wildcodeschool.punkapi.BeerFactory.beers;
+import static fr.wildcodeschool.punkapi.BeerUtils.beers;
 import static fr.wildcodeschool.punkapi.BeerUtils.getAllBeers;
 import static fr.wildcodeschool.punkapi.BeerUtils.getBeerBy;
 
@@ -17,24 +17,22 @@ public class App
 {
     public static void main(String... args) {
 
-  /*      getAllBeers();
+        getAllBeers();
         for (int i = 1 ; i < beers.size() ; i++) {
             System.out.println(beers.get(i).getName());
         }
-*/
-        System.out.println(getBeerBy(6).getAbv());
+        getBeerBy(6);
+        System.out.println(beers.get(0).getAbv());
 
-/*        List<Beer> beersByIngredients;
-        beersByIngredients = getBeerBy(IngredientQuery.ABV, true, 16);
-        for (int i = 1; i < beersByIngredients.size(); i++) {
-            System.out.println(beersByIngredients.get(i).getId());
-        }*/
+        getBeerBy(IngredientQuery.ABV, true, 16);
+        for (int i = 1; i < beers.size(); i++) {
+            System.out.println(beers.get(i).getId());
+        }
 
-        List<Beer> beersByName;
-        beersByName = getBeerBy("india");
-        for (int i = 1; i < beersByName.size(); i++) {
-            System.out.println(beersByName.get(i).getName());
-            System.out.println(beersByName.get(i).getId());
+        getBeerBy("india");
+        for (int i = 1; i < beers.size(); i++) {
+            System.out.println(beers.get(i).getName());
+            System.out.println(beers.get(i).getId());
         }
 
     }
