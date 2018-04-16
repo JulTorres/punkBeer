@@ -1,55 +1,58 @@
 package fr.wildcodeschool.punkapi;
 
-import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import static fr.wildcodeschool.punkapi.PunkBeerDAO.*;
+
 
 public class BeerUtils {
 
     // private
     private static final String baseUrl = "https://api.punkapi.com/v2/beers";
-    private static JsonArray received;
 
-    // package private
-    static List<Beer> beers = new ArrayList<>();
-    static List<Beer> customList = new ArrayList<>();
-
-
-    /** récupère la liste de toutes les bières
-     *
+    /**
+     * Récupère la liste de toutes les bières.
      */
-    public static void getAllBeers() {
+    public static List<Beer> getAllBeers() {//TODO virer les static
 
         int index = 1;
         String url;
-        beers.clear();
+        List<Beer> beers = new ArrayList<>();
 
         do {
-            url = baseUrl + "?page=" + index++ + "&per_page=25";//TODO remettre 80
-            fetchBeer(url);
-        } while (received != null && received.size() == 80);
+            url = baseUrl + "?page=" + index++ + "&per_page=80";//TODO remettre 80
+            beers = fetchBeer(url);
+        } while (beers != null && beers.size() == 80);
+
+        return beers;
     }
 
 
-    // récupère une bière par son id.
-    public static void getBeerBy(int id) {
+    /**
+     * Récupère une bière par son id.
+     * @param id L'id de la bière recherchée.
+     */
+    public static List<Beer> getBeerBy(int id) {//return liste de 1 item !!
         String url = baseUrl + "/" + id;
-        beers.clear();
+        List<Beer> beers = new ArrayList<>();
 
-        fetchBeer(url);
+        beers = fetchBeer(url);
+
+        return beers;//Liste de 1 item !!
     }
 
 
-    // récupérer les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
-    public static void getBeerByIngredient(String ingredient, boolean moreOrLess, double quantity) {
+    /**
+     * Récupère les bières contenant moins (ou plus) d'une certaine quantité d'un ingrédient.
+     * @param ingredient Le nom de l'ingrédient recherché.
+     * @param moreOrLess True si on recherche les bières contenant une quantité supérieure à la valeur fournie, False sinon.
+     * @param quantity Le critère de recherche quantité.
+     */
+    public static List<Beer> getBeerByIngredient(String ingredient, boolean moreOrLess, double quantity) {
         // recupère toutes les bières
-        getAllBeers();
+        List<Beer> beers = getAllBeers();
+        List<Beer> customList = new ArrayList<>();
         //iterate beers
         for(int i = 0; i < beers.size(); i++) {
             //check ingredients for one specific ingredient
@@ -62,50 +65,46 @@ public class BeerUtils {
                 }
             }
         }
+
+        return customList;
     }
 
 
-
-
-    // récupérer les bières selon la valeur d'une de leurs caractéristiques
-    public static void getBeerBy(String characteristic, boolean moreOrLess, int quantity) {
+    /**
+     * Récupère les bières selon la valeur d'une de leurs caractéristiques.
+     * @param characteristic Une des caractéristiques d'une bière.
+     * @param moreOrLess True si on recherche les bières contenant une valeur supérieure à la valeur fournie, False sinon.
+     * @param quantity Le critère de recherche quantité.
+     */
+    public static List<Beer> getBeerBy(String characteristic, boolean moreOrLess, int quantity) {
 
         String choiceComplement = moreOrLess ? "_gt" : "_lt";
         String url = baseUrl + "?" + characteristic + choiceComplement + "=" + quantity;
-        beers.clear();
+        List<Beer> beers = new ArrayList<>();
 
-        fetchBeer(url);
+        beers = fetchBeer(url);
 
         //TODO gérer le cas ou rien n'est retourné ex abv 80+
+        return beers;
     }
 
 
-    // récupérer la liste des bières en fonction d'un pattern de recherche dans le nom
-    public static void getBeerBy(String name) {
+    /**
+     * Récupère la liste des bières en fonction de son nom.
+     * @param name Le nom recherché.
+     */
+    public static List<Beer> getBeerBy(String name) {
 
         String url = baseUrl + "?beer_name=" + name;
-        beers.clear();
+        List<Beer> beers = new ArrayList<>();
 
-        fetchBeer(url);
+        beers = fetchBeer(url);
 
         //TODO gérer le cas ou rien n'est retourné ex abv 80+
+        return beers;
     }
 
+    //Récupère la liste des bières en fonction d'un pattern de recherche dans le nom
 
-    //se connecte à l'api sur l'url fournie et retourne le json reçu
-    private static void fetchBeer(String url) {
-        try (InputStream is = new URL(url).openStream();
-             JsonReader reader = Json.createReader(new InputStreamReader(is, "UTF-8"))
-        ) {
-            received = reader.readArray();
-            for (int i = 0 ; i <= received.size() - 1 ; i++) {
-                Beer beer = BeerFactory.buildBeer(received.getJsonObject(i));
-                beers.add(beer);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -3,7 +3,7 @@ package fr.wildcodeschool.punkapi;
 
 public class Ingredient {
 
-    public IngredientType ingredientType;//TODO remplacer par enum
+    public IngredientType ingredientType;
     public String name;
     public double amountValue;
     public String amountUnit;

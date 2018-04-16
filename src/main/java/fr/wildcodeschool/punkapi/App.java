@@ -1,6 +1,7 @@
 package fr.wildcodeschool.punkapi;
 
 import static fr.wildcodeschool.punkapi.BeerUtils.*;
+import java.util.List;
 
 /**
  * PunkBeer
@@ -16,10 +17,10 @@ public class App
         for (int i = 1 ; i < beers.size() ; i++) {
             System.out.println(beers.get(i).getName());
         }
-*/
+
         getBeerBy(6);
         System.out.println(beers.get(0).getAbv());
-
+*/
        /*
          * getting a list of beers by characteristics
          *//*
@@ -34,11 +35,12 @@ public class App
             System.out.println(beers.get(i).getId());
         }*/
 
-/*        getBeerByIngredient("Motueka", true, 5);
+        List<Beer> customList = getBeerByIngredient("Extra Pale", true, 6);
         for (int i = 1; i < customList.size(); i++) {
             System.out.println(customList.get(i).getName());
             System.out.println(customList.get(i).getId());
-        }*/
+        }
+        System.out.println("La liste contient " + customList.size() + " bières.");
 
     }
 }
